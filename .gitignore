@@ -1,0 +1,11 @@
+# build output and test runs
+/build/
+/tests/run/
+__pycache__/
+*.pkl
+# the author's own folders (Workshop texts in every language, releases, the bin)
+/workshop/
+/releases/
+/_to_delete/
+# RPFM's schema for the game (11 MB, kept up to date by RPFM's project): docs/DESIGN.md says where to get it
+/generator/schema_wh3.ron

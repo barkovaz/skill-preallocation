@@ -1,0 +1,47 @@
+# Rebuilds the native module (DLL) and the mod's pack from this source, on Windows and on Linux, and
+# checks that both are byte for byte the published files: the checksums in SHA256SUMS.txt, which are
+# those of the files the Steam Workshop serves. SECURITY.md, check 3, is the same rebuild on your own PC.
+name: Rebuild and compare
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rebuild:
+    name: Rebuild on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Install the compiler (Zig 0.13.0, from PyPI)
+        run: python -m pip install ziglang==0.13.0
+      - name: Build the DLL
+        run: python generator/build_native.py
+      - name: Build the pack
+        run: python generator/build_pack.py
+      - name: The DLL built is the one the repository carries (native_bin.lua unchanged)
+        run: git diff --exit-code -- src/script/skill_preallocation/native_bin.lua
+      - name: Compare both with SHA256SUMS.txt
+        run: python generator/verify_native.py build/native/skill_preallocation_native.dll build/skill_preallocation.pack
+      - name: Test the checking tool
+        run: python tests/test_verify.py
+      - name: Keep the files built
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rebuilt-on-${{ runner.os }}
+          path: |
+            build/native/skill_preallocation_native.dll
+            build/skill_preallocation.pack
+          if-no-files-found: ignore

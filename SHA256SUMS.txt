@@ -1,0 +1,10 @@
+# Skill Pre-Allocation: the published SHA-256 checksums. SECURITY.md explains how to check yours;
+# generator/verify_native.py checks a pack or a DLL against this file.
+#
+# The native module, skill_preallocation_native.dll (the file the mod writes into the game's folder):
+# kind  mod version   native module   SHA-256
+dll     0.19.2        1.1.0           40cd6888a3c4f813e9bd7dfe0429b2539ea15f39a9a023800ba96b5381fbe2b9
+#
+# The mod's pack, skill_preallocation.pack (the file the Steam Workshop gives you):
+# kind  mod version   SHA-256
+pack    0.19.2        6d91b82e677b4f4c69a6ffeabaeb59c54c9ecf59f7d080d3cea31eac620d4182

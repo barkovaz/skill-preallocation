@@ -1,0 +1,3 @@
+add_working_directory "../workshop/steam #2"; # a library with "#" in its name
+mod "mod4.pack";
+mod "mod1.pack"; mod "mod2.pack"

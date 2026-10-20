@@ -1,0 +1,11 @@
+# Text files stay with LF line endings on every computer, so a build from a checkout (or the ZIP GitHub
+# makes) gives the same bytes everywhere: the same DLL and the same pack as the published ones.
+* text=auto eol=lf
+# Kept exactly as they are, byte for byte: the game's layout files use CRLF, and the test fixtures are
+# what the tests expect (one mod list has Windows line endings on purpose).
+*.twui.xml -text
+tests/fixtures/** -text
+*.pack binary
+*.png binary
+*.dll binary
+*.exe binary

@@ -1,0 +1,5 @@
+add_working_directory "../workshop/123";
+mod "mod1.pack";
+mod "mod2.pack";
+mod "mod3.pack"; # in the working directory
+mod "missing.pack";
